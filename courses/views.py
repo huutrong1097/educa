@@ -10,8 +10,10 @@ class OwnerMixin(object):
         return qs.filter(owner = self.request.user)
 
 class OwnerEditMixin(object):
+    #The default behavior for this method is saving the instance (for model forms) and redirecting the user to success_url 
     def form_valid(self, form):
         form.instance.owner = self.request.user
+        #override to automatically set the curent user in the owner
         return super().form_valid(form)
 class OwnerCourseMixin(OwnerMixin):
     model = Course
